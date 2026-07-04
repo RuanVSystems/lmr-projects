@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Member Updates — VitalPath</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1A22; --mint:#4ADEC4; --mint-strong:#2EC4A6;
+    --text:#EAF2F0; --text-muted:rgba(234,242,240,0.65);
+    --glass:rgba(255,255,255,0.06); --glass-border:rgba(255,255,255,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+  .blobs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;will-change:transform}
+  .blob1{width:900px;height:900px;left:-200px;top:-100px;background:radial-gradient(circle,rgba(74,222,196,0.45) 0%,transparent 70%);filter:blur(80px);animation:drift1 35s ease-in-out alternate infinite}
+  .blob2{width:1000px;height:1000px;left:45%;top:-150px;background:radial-gradient(circle,rgba(96,165,250,0.35) 0%,transparent 70%);filter:blur(90px);animation:drift2 50s ease-in-out alternate infinite}
+  @keyframes drift1{to{transform:translate(350px,250px) scale(1.15)}}
+  @keyframes drift2{to{transform:translate(-300px,300px) scale(1.1)}}
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
+  nav{position:sticky;top:0;z-index:50;background:rgba(14,26,34,0.72);backdrop-filter:blur(24px) saturate(160%);border-bottom:1px solid var(--glass-border)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1080px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+  .brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--mint),var(--mint-strong));display:flex;align-items:center;justify-content:center}
+  .brand-mark svg{width:24px;height:24px}
+  .brand-name{font-weight:800;font-size:1.05rem}
+  .brand-sub{display:block;font-size:0.62rem;font-weight:600;letter-spacing:0.16em;color:var(--mint);text-transform:uppercase}
+  .btn{display:inline-block;padding:12px 26px;border-radius:999px;background:linear-gradient(135deg,var(--mint),var(--mint-strong));color:#07332A;font-weight:700;font-size:0.92rem;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(74,222,196,0.25)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(74,222,196,0.4)}
+  .btn-ghost{background:var(--glass);color:var(--text);border:1px solid var(--glass-border);box-shadow:none}
+  .btn-ghost:hover{border-color:var(--mint);box-shadow:none}
+  .card{background:var(--glass);border:1px solid var(--glass-border);border-radius:22px;padding:36px;backdrop-filter:blur(30px) saturate(160%);-webkit-backdrop-filter:blur(30px) saturate(160%)}
+  h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:300;margin-bottom:8px}
+  h1 strong{font-weight:700}
+  .sub{color:var(--text-muted);margin-bottom:26px;font-size:0.95rem}
+  .field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+  .field label{font-size:0.82rem;font-weight:600;color:var(--text-muted)}
+  .field input,.field select,.field textarea{background:rgba(14,26,34,0.6);border:1px solid var(--glass-border);border-radius:12px;padding:13px 16px;color:var(--text);font-family:inherit;font-size:0.95rem;outline:none;-webkit-appearance:none;appearance:none}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--mint)}
+  .field textarea{min-height:110px;resize:vertical}
+  .msg{display:none;border-radius:12px;padding:13px 16px;margin-bottom:16px;font-size:0.88rem;font-weight:600}
+  .msg.show{display:block}
+  .msg.err{background:rgba(255,99,99,0.12);border:1px solid rgba(255,99,99,0.4);color:#ff9d9d}
+  .msg.ok{background:rgba(74,222,196,0.12);border:1px solid var(--mint);color:var(--mint)}
+  .linkish{background:none;border:none;color:var(--mint);font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;padding:0}
+  main{padding:56px 0 80px}
+  .hidden{display:none !important}
+  .head-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:26px}
+  .pill{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--mint);background:rgba(74,222,196,0.12);border:1px solid rgba(74,222,196,0.3);padding:5px 14px;border-radius:999px}
+  /* Quick actions */
+  .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:34px}
+  @media(max-width:640px){.quick{grid-template-columns:1fr}}
+  .quick a{display:block;text-decoration:none;color:var(--text);background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;padding:18px 20px;font-weight:600;font-size:0.92rem;transition:border-color .2s,transform .2s;backdrop-filter:blur(20px)}
+  .quick a:hover{border-color:var(--mint);transform:translateY(-3px)}
+  .quick a span{display:block;font-size:1.3rem;margin-bottom:6px}
+  /* Filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .filter{padding:8px 18px;border-radius:999px;font-weight:600;font-size:0.82rem;background:var(--glass);border:1px solid var(--glass-border);color:var(--text-muted);cursor:pointer;font-family:inherit}
+  .filter.active{background:rgba(74,222,196,0.15);border-color:var(--mint);color:var(--mint)}
+  /* Update cards */
+  .update{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:24px 26px;backdrop-filter:blur(30px);margin-bottom:16px}
+  .update .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .cat{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:rgba(74,222,196,0.12);border:1px solid rgba(74,222,196,0.3);color:var(--mint)}
+  .cat.rate{background:rgba(255,99,132,0.12);border-color:rgba(255,99,132,0.4);color:#ff8fa3}
+  .cat.product{background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.4);color:#93c5fd}
+  .cat.gap{background:rgba(251,191,36,0.12);border-color:rgba(251,191,36,0.4);color:#fcd34d}
+  .update .meta .when{font-size:0.76rem;color:var(--text-muted)}
+  .update .meta .scheme-tag{font-size:0.76rem;color:var(--text-muted);font-weight:600}
+  .update h3{font-size:1.08rem;font-weight:700;margin-bottom:6px}
+  .update p{font-size:0.92rem;color:var(--text-muted);white-space:pre-line}
+  .update a{color:var(--mint);font-weight:600;font-size:0.86rem}
+  .update .admin-del{float:right}
+  .empty{text-align:center;color:var(--text-muted);padding:40px 0}
+  /* Admin composer */
+  #composer{border:1px dashed rgba(74,222,196,0.5);margin-bottom:30px}
+  #composer h2{font-size:1.1rem;font-weight:700;margin-bottom:16px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.two-col{grid-template-columns:1fr}}
+  footer{border-top:1px solid var(--glass-border);background:rgba(255,255,255,0.04);padding:28px 0;text-align:center;backdrop-filter:blur(40px)}
+  footer p{font-size:0.78rem;color:var(--text-muted)}
+</style>
+</head>
+<body>
+<div class="blobs" aria-hidden="true"><div class="blob blob1"></div><div class="blob blob2"></div></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#07332A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg></span>
+      <span><span class="brand-name">VitalPath</span><span class="brand-sub">Member Updates</span></span>
+    </a>
+    <button class="btn btn-ghost" id="logoutBtn" style="display:none">Log out</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- LOGIN -->
+  <div id="loginView" class="card hidden" style="max-width:520px;margin:0 auto">
+    <h1>Member <strong>login</strong></h1>
+    <p class="sub">Exclusive updates for VitalPath clients — scheme news, rate changes and new product launches, curated by your advisor. Sign in with the email address you were invited with.</p>
+    <div class="msg err" id="loginErr"></div>
+    <div class="msg ok" id="loginOk"></div>
+    <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+    <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="••••••••"></div>
+    <button class="btn" id="loginBtn" style="width:100%">Sign In</button>
+    <p style="margin-top:16px;text-align:center"><button class="linkish" id="forgotBtn">Forgot your password?</button></p>
+    <p style="margin-top:12px;text-align:center;font-size:0.82rem;color:var(--text-muted)">Not a member yet? <a href="index.html#quote" style="color:var(--mint)">Get in touch</a> and I'll set you up.</p>
+  </div>
+
+  <!-- SET NEW PASSWORD (after invite / reset link) -->
+  <div id="resetView" class="card hidden" style="max-width:520px;margin:0 auto">
+    <h1>Set your <strong>password</strong></h1>
+    <p class="sub">Choose a password for your VitalPath member account (at least 8 characters).</p>
+    <div class="msg err" id="resetErr"></div>
+    <div class="field"><label for="newPassword">New password</label><input id="newPassword" type="password" autocomplete="new-password"></div>
+    <button class="btn" id="resetBtn" style="width:100%">Save Password &amp; Continue</button>
+  </div>
+
+  <!-- MEMBER FEED -->
+  <div id="feedView" class="hidden">
+    <div class="head-row">
+      <div><h1 id="greeting">Welcome</h1><p class="sub" style="margin:0">Your medical aid &amp; gap cover updates, curated by Ruan.</p></div>
+      <span class="pill">Members Only</span>
+    </div>
+
+    <div class="quick">
+      <a href="index.html#brochures"><span>📄</span>Download plan brochures</a>
+      <a href="index.html#quote"><span>📝</span>Request a quote or review</a>
+      <a href="https://wa.me/27813254764"><span>💬</span>WhatsApp me directly</a>
+    </div>
+
+    <!-- Admin composer: only visible to Ruan -->
+    <div class="card hidden" id="composer">
+      <h2>📢 Post an update <span style="font-weight:400;font-size:0.8rem;color:var(--text-muted)">(only you can see this box)</span></h2>
+      <div class="msg err" id="postErr"></div>
+      <div class="msg ok" id="postOk"></div>
+      <div class="field"><label for="pTitle">Title</label><input id="pTitle" placeholder="e.g. Discovery launches 2027 plans — what's new"></div>
+      <div class="two-col">
+        <div class="field"><label for="pCat">Category</label>
+          <select id="pCat">
+            <option>Industry News</option><option>Rate Changes</option><option>Benefit Updates</option><option>New Products</option><option>Gap Cover</option><option>Tips &amp; Advice</option>
+          </select>
+        </div>
+        <div class="field"><label for="pScheme">Scheme / provider (optional)</label><input id="pScheme" placeholder="e.g. Discovery Health"></div>
+      </div>
+      <div class="field"><label for="pBody">Update</label><textarea id="pBody" placeholder="Write the update your clients should see..."></textarea></div>
+      <div class="field"><label for="pLink">Link (optional)</label><input id="pLink" placeholder="https://... (brochure, article, official announcement)"></div>
+      <button class="btn" id="postBtn">Publish Update</button>
+    </div>
+
+    <div class="filters" id="filters"></div>
+    <div id="feed"></div>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2026 VitalPath · Ruan Venter, representative under supervision of LMR Projects cc — FSP No. 18089 · CMS Broker Accreditation BR54037</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://xzgaeiwkaskeodvalcbh.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_C_HVhBfvugZOCYgRMYNAGg_KCAsZD4l';
+  const ADMIN_EMAIL = 'ruanventer@lmrpro.co.za';
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const $ = id => document.getElementById(id);
+  const views = ['loginView','resetView','feedView'];
+  function show(view){ views.forEach(v=>$(v).classList.toggle('hidden', v!==view)); $('logoutBtn').style.display = view==='feedView' ? '' : 'none'; }
+
+  const CATS = ['All','Rate Changes','Benefit Updates','New Products','Gap Cover','Industry News','Tips & Advice'];
+  const catClass = c => c==='Rate Changes' ? 'rate' : c==='New Products' ? 'product' : c==='Gap Cover' ? 'gap' : '';
+  let allUpdates = [], activeCat = 'All', isAdmin = false;
+
+  function renderFilters(){
+    $('filters').innerHTML = CATS.map(c=>'<button class="filter'+(c===activeCat?' active':'')+'" data-cat="'+c+'">'+c+'</button>').join('');
+    document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{ activeCat=b.dataset.cat; renderFilters(); renderFeed(); }));
+  }
+
+  function renderFeed(){
+    const items = activeCat==='All' ? allUpdates : allUpdates.filter(u=>u.category===activeCat);
+    if (!items.length){ $('feed').innerHTML = '<p class="empty">No updates in this category yet — check back soon!</p>'; return; }
+    $('feed').innerHTML = items.map(u=>{
+      const d = new Date(u.created_at).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'});
+      return '<div class="update">'
+        + (isAdmin ? '<button class="linkish admin-del" data-id="'+u.id+'">Delete</button>' : '')
+        + '<div class="meta"><span class="cat '+catClass(u.category)+'">'+(u.category||'Update')+'</span>'
+        + (u.scheme ? '<span class="scheme-tag">'+u.scheme+'</span>' : '')
+        + '<span class="when">'+d+'</span></div>'
+        + '<h3></h3><p></p>'
+        + (u.link ? '<a href="'+encodeURI(u.link)+'" target="_blank" rel="noopener">Read more →</a>' : '')
+        + '</div>';
+    }).join('');
+    // Safe text insertion
+    document.querySelectorAll('#feed .update').forEach((el,i)=>{
+      el.querySelector('h3').textContent = items[i].title || '';
+      el.querySelector('p').textContent = items[i].body || '';
+    });
+    if (isAdmin) document.querySelectorAll('.admin-del').forEach(b=>b.addEventListener('click', async ()=>{
+      if (!confirm('Delete this update?')) return;
+      await db.from('updates').delete().eq('id', b.dataset.id);
+      loadFeed();
+    }));
+  }
+
+  async function loadFeed(){
+    const { data, error } = await db.from('updates').select('*').order('created_at',{ascending:false});
+    allUpdates = data || [];
+    renderFilters(); renderFeed();
+  }
+
+  async function enterFeed(session){
+    const email = session.user.email || '';
+    isAdmin = email.toLowerCase() === ADMIN_EMAIL;
+    $('greeting').innerHTML = isAdmin ? 'Welcome back, <strong>Ruan</strong>' : 'Welcome, <strong>member</strong>';
+    $('composer').classList.toggle('hidden', !isAdmin);
+    show('feedView');
+    loadFeed();
+  }
+
+  // --- Admin: publish update ---
+  $('postBtn').addEventListener('click', async ()=>{
+    $('postErr').classList.remove('show'); $('postOk').classList.remove('show');
+    const title = $('pTitle').value.trim();
+    if (!title){ $('postErr').textContent='Give the update a title.'; $('postErr').classList.add('show'); return; }
+    const { error } = await db.from('updates').insert({
+      title, category: $('pCat').value, scheme: $('pScheme').value.trim() || null,
+      body: $('pBody').value.trim() || null, link: $('pLink').value.trim() || null
+    });
+    if (error){ $('postErr').textContent = error.message; $('postErr').classList.add('show'); return; }
+    $('pTitle').value=$('pScheme').value=$('pBody').value=$('pLink').value='';
+    $('postOk').textContent='Published! Your clients can see it now.'; $('postOk').classList.add('show');
+    loadFeed();
+  });
+
+  // --- Auth wiring ---
+  $('loginBtn').addEventListener('click', async ()=>{
+    $('loginErr').classList.remove('show'); $('loginOk').classList.remove('show');
+    const { data, error } = await db.auth.signInWithPassword({ email: $('email').value.trim(), password: $('password').value });
+    if (error){ $('loginErr').textContent = 'Sign-in failed: ' + error.message; $('loginErr').classList.add('show'); return; }
+    enterFeed(data.session);
+  });
+  $('password').addEventListener('keydown', e=>{ if(e.key==='Enter') $('loginBtn').click(); });
+
+  $('forgotBtn').addEventListener('click', async ()=>{
+    const email = $('email').value.trim();
+    if (!email){ $('loginErr').textContent = 'Type your email above first, then click "Forgot password".'; $('loginErr').classList.add('show'); return; }
+    const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+    if (error){ $('loginErr').textContent = error.message; $('loginErr').classList.add('show'); return; }
+    $('loginOk').textContent = 'Password reset email sent — check your inbox.'; $('loginOk').classList.add('show');
+  });
+
+  $('resetBtn').addEventListener('click', async ()=>{
+    const pw = $('newPassword').value;
+    if (pw.length < 8){ $('resetErr').textContent = 'Password must be at least 8 characters.'; $('resetErr').classList.add('show'); return; }
+    const { error } = await db.auth.updateUser({ password: pw });
+    if (error){ $('resetErr').textContent = error.message; $('resetErr').classList.add('show'); return; }
+    const { data: s } = await db.auth.getSession();
+    if (s.session) enterFeed(s.session); else show('loginView');
+  });
+
+  $('logoutBtn').addEventListener('click', async ()=>{ await db.auth.signOut(); show('loginView'); });
+
+  db.auth.onAuthStateChange((event)=>{ if (event === 'PASSWORD_RECOVERY') show('resetView'); });
+
+  (async function init(){
+    if (location.hash.includes('type=invite') || location.hash.includes('type=recovery')){ show('resetView'); return; }
+    const { data } = await db.auth.getSession();
+    if (data.session) enterFeed(data.session); else show('loginView');
+  })();
+</script>
+</body>
+</html>
