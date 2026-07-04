@@ -5,13 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Member Updates — LMR Projects</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E1A22">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E1A22'/%3E%3Cpath d='M32 10l16 8v12c0 10-7 17-16 20-9-3-16-10-16-20V18l16-8z' fill='none' stroke='%234ADEC4' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,340;9..144,600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0E1A22; --mint:#4ADEC4; --mint-strong:#2EC4A6;
-    --text:#EAF2F0; --text-muted:rgba(234,242,240,0.65);
+    --text:#EAF2F0; --text-muted:rgba(234,242,240,0.74);
     --glass:rgba(255,255,255,0.06); --glass-border:rgba(255,255,255,0.14);
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -35,8 +37,8 @@
   .btn-ghost{background:var(--glass);color:var(--text);border:1px solid var(--glass-border);box-shadow:none}
   .btn-ghost:hover{border-color:var(--mint);box-shadow:none}
   .card{background:var(--glass);border:1px solid var(--glass-border);border-radius:22px;padding:36px;backdrop-filter:blur(30px) saturate(160%);-webkit-backdrop-filter:blur(30px) saturate(160%)}
-  h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:300;margin-bottom:8px}
-  h1 strong{font-weight:700}
+  h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(1.7rem,4vw,2.3rem);font-weight:340;margin-bottom:8px}
+  h1 strong{font-weight:600}
   .sub{color:var(--text-muted);margin-bottom:26px;font-size:0.95rem}
   .field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
   .field label{font-size:0.82rem;font-weight:600;color:var(--text-muted)}
@@ -83,6 +85,8 @@
   @media(max-width:640px){.two-col{grid-template-columns:1fr}}
   footer{border-top:1px solid var(--glass-border);background:rgba(255,255,255,0.04);padding:28px 0;text-align:center;backdrop-filter:blur(40px)}
   footer p{font-size:0.78rem;color:var(--text-muted)}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:6px}
+  @media (prefers-reduced-motion: reduce){.blob{animation:none}}
 </style>
 </head>
 <body>
@@ -130,14 +134,14 @@
     </div>
 
     <div class="quick">
-      <a href="index.html#brochures"><span>📄</span>Download plan brochures</a>
-      <a href="index.html#quote"><span>📝</span>Request a quote or review</a>
-      <a href="https://wa.me/27813254764"><span>💬</span>WhatsApp me directly</a>
+      <a href="index.html#brochures"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;color:var(--mint)"><path d="M14 2.5H7a2 2 0 00-2 2v15a2 2 0 002 2h10a2 2 0 002-2V8l-5-5.5z"/><path d="M14 2.5V8h5M9 13h6M9 17h4"/></svg></span>Download plan brochures</a>
+      <a href="index.html#quote"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;color:var(--mint)"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>Request a quote or review</a>
+      <a href="https://wa.me/27813254764"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;color:var(--mint)"><path d="M21 11.6a7.6 7.6 0 01-7.6 7.6H6.8L3 21.5V11.6A7.6 7.6 0 0110.6 4h2.8A7.6 7.6 0 0121 11.6z"/></svg></span>WhatsApp me directly</a>
     </div>
 
     <!-- Admin composer: only visible to Ruan -->
     <div class="card hidden" id="composer">
-      <h2>📢 Post an update <span style="font-weight:400;font-size:0.8rem;color:var(--text-muted)">(only you can see this box)</span></h2>
+      <h2>Post an update <span style="font-weight:400;font-size:0.8rem;color:var(--text-muted)">(only you can see this box)</span></h2>
       <div class="msg err" id="postErr"></div>
       <div class="msg ok" id="postOk"></div>
       <div class="field"><label for="pTitle">Title</label><input id="pTitle" placeholder="e.g. Discovery launches 2027 plans — what's new"></div>
