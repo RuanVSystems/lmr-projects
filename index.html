@@ -161,6 +161,26 @@
   footer p{font-size:0.82rem;color:var(--text-muted);margin-bottom:6px}
   footer .fine{font-size:0.74rem;opacity:0.7}
 
+  /* ---- Member zone ---- */
+  .mz-msg{display:none;border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:0.88rem;font-weight:600}
+  .mz-msg.show{display:block}
+  .mz-msg.err{background:rgba(255,99,99,0.12);border:1px solid rgba(255,99,99,0.4);color:#ff9d9d}
+  .mz-msg.ok{background:rgba(74,222,196,0.12);border:1px solid var(--mint);color:var(--mint)}
+  .mz-linkish{background:none;border:none;color:var(--mint);font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;padding:0}
+  .mz-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .mz-filter{padding:8px 18px;border-radius:999px;font-weight:600;font-size:0.82rem;background:var(--glass);border:1px solid var(--glass-border);color:var(--text-muted);cursor:pointer;font-family:inherit}
+  .mz-filter.active{background:rgba(74,222,196,0.15);border-color:var(--mint);color:var(--mint)}
+  .mz-update{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:22px 24px;backdrop-filter:blur(30px);margin-bottom:14px}
+  .mz-update .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .mz-cat{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:rgba(74,222,196,0.12);border:1px solid rgba(74,222,196,0.3);color:var(--mint)}
+  .mz-cat.rate{background:rgba(255,99,132,0.12);border-color:rgba(255,99,132,0.4);color:#ff8fa3}
+  .mz-cat.product{background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.4);color:#93c5fd}
+  .mz-cat.gapc{background:rgba(251,191,36,0.12);border-color:rgba(251,191,36,0.4);color:#fcd34d}
+  .mz-update .when,.mz-update .scheme-tag{font-size:0.76rem;color:var(--text-muted)}
+  .mz-update h3{font-size:1.05rem;font-weight:700;margin-bottom:6px}
+  .mz-update p{font-size:0.92rem;color:var(--text-muted);white-space:pre-line}
+  .mz-update a{color:var(--mint);font-weight:600;font-size:0.86rem}
+  .mz-update .mz-del{float:right}
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
   .reveal.visible{opacity:1;transform:none}
 </style>
@@ -184,7 +204,7 @@
       <a href="#services">Services</a>
       <a href="#news">News</a>
       <a href="#about">About</a>
-      <a href="portal.html">Member Login</a>
+      <a href="#members">Members</a>
       <a href="#quote" class="btn">Get a Quote</a>
     </div>
   </div>
@@ -375,6 +395,50 @@
   <p class="news-status" id="newsStatus">Loading the latest news…</p>
 </section>
 
+<!-- ============ MEMBER ZONE ============ -->
+<section class="wrap reveal" id="members">
+  <h2>Member <strong>zone</strong></h2>
+  <p class="section-sub">Exclusive updates for LMR Projects clients — rate changes, benefit updates and new product launches, curated by your advisor.</p>
+
+  <div class="quote-card" id="mzLogin" style="max-width:520px;margin:0 auto;display:none">
+    <h3 style="font-weight:700;font-size:1.15rem;margin-bottom:8px">Member login</h3>
+    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:18px">Sign in with the email address you were invited with.</p>
+    <div class="mz-msg err" id="mzLoginErr"></div>
+    <div class="mz-msg ok" id="mzLoginOk"></div>
+    <div class="field" style="margin-bottom:14px"><label for="mzEmail">Email</label><input id="mzEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+    <div class="field" style="margin-bottom:18px"><label for="mzPassword">Password</label><input id="mzPassword" type="password" autocomplete="current-password" placeholder="••••••••"></div>
+    <button class="btn" id="mzLoginBtn" style="width:100%">Sign In</button>
+    <p style="margin-top:14px;text-align:center"><button class="mz-linkish" id="mzForgotBtn">Forgot your password?</button></p>
+    <p style="margin-top:10px;text-align:center;font-size:0.82rem;color:var(--text-muted)">Not a member yet? <a href="#quote" style="color:var(--mint)">Get in touch</a> and I'll set you up.</p>
+  </div>
+
+  <div id="mzFeedWrap" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px">
+      <p style="font-weight:600" id="mzGreeting"></p>
+      <button class="btn btn-ghost btn-sm" id="mzLogoutBtn">Log out</button>
+    </div>
+
+    <div class="quote-card" id="mzComposer" style="display:none;border:1px dashed rgba(74,222,196,0.5);margin-bottom:24px;padding:28px">
+      <h3 style="font-weight:700;margin-bottom:14px">📢 Post an update <span style="font-weight:400;font-size:0.8rem;color:var(--text-muted)">(only you can see this box)</span></h3>
+      <div class="mz-msg err" id="mzPostErr"></div>
+      <div class="mz-msg ok" id="mzPostOk"></div>
+      <div class="field" style="margin-bottom:14px"><label for="mzTitle">Title</label><input id="mzTitle" placeholder="e.g. Discovery launches 2027 plans — what's new"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="field"><label for="mzCat">Category</label>
+          <select id="mzCat"><option>Industry News</option><option>Rate Changes</option><option>Benefit Updates</option><option>New Products</option><option>Gap Cover</option><option>Tips &amp; Advice</option></select>
+        </div>
+        <div class="field"><label for="mzScheme">Scheme / provider (optional)</label><input id="mzScheme" placeholder="e.g. Discovery Health"></div>
+      </div>
+      <div class="field" style="margin-bottom:14px"><label for="mzBody">Update</label><textarea id="mzBody" placeholder="Write the update your clients should see..."></textarea></div>
+      <div class="field" style="margin-bottom:16px"><label for="mzLink">Link (optional)</label><input id="mzLink" placeholder="https://... (brochure, article, official announcement)"></div>
+      <button class="btn" id="mzPostBtn">Publish Update</button>
+    </div>
+
+    <div class="mz-filters" id="mzFilters"></div>
+    <div id="mzFeed"></div>
+  </div>
+</section>
+
 <!-- ============ ABOUT ============ -->
 <section class="wrap reveal" id="about">
   <h2>About <strong>LMR Projects</strong></h2>
@@ -397,7 +461,7 @@
         <span class="portal-badge">For Existing Clients</span>
         <h3>Member Updates</h3>
         <p>Exclusive login for my clients — curated scheme news, rate changes and new product launches, straight from your advisor.</p>
-        <p style="margin-top:16px"><a class="btn" href="portal.html">Member Login</a></p>
+        <p style="margin-top:16px"><a class="btn" href="#members">Member Login</a></p>
       </div>
     </div>
   </div>
@@ -476,6 +540,91 @@
       status.innerHTML = 'Live news is temporarily unavailable. In the meantime, <a href="https://www.medicalbrief.co.za" target="_blank" rel="noopener" style="color:var(--mint)">Medical Brief</a> and the <a href="https://www.medicalschemes.co.za" target="_blank" rel="noopener" style="color:var(--mint)">Council for Medical Schemes</a> carry the latest industry updates.';
     }
   })();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  const db = window.supabase.createClient('https://xzgaeiwkaskeodvalcbh.supabase.co','sb_publishable_C_HVhBfvugZOCYgRMYNAGg_KCAsZD4l');
+  const ADMIN_EMAIL = 'ruanventer@lmrpro.co.za';
+  const $ = id => document.getElementById(id);
+  const CATS = ['All','Rate Changes','Benefit Updates','New Products','Gap Cover','Industry News','Tips & Advice'];
+  const catClass = c => c==='Rate Changes' ? ' rate' : c==='New Products' ? ' product' : c==='Gap Cover' ? ' gapc' : '';
+  let all = [], activeCat = 'All', isAdmin = false;
+
+  function setView(signedIn){
+    $('mzLogin').style.display = signedIn ? 'none' : '';
+    $('mzFeedWrap').style.display = signedIn ? '' : 'none';
+  }
+  function renderFilters(){
+    $('mzFilters').innerHTML = CATS.map(c=>'<button class="mz-filter'+(c===activeCat?' active':'')+'" data-cat="'+c+'">'+c+'</button>').join('');
+    document.querySelectorAll('.mz-filter').forEach(b=>b.addEventListener('click',()=>{ activeCat=b.dataset.cat; renderFilters(); renderFeed(); }));
+  }
+  function renderFeed(){
+    const items = activeCat==='All' ? all : all.filter(u=>u.category===activeCat);
+    if (!items.length){ $('mzFeed').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:30px 0">No updates in this category yet — check back soon!</p>'; return; }
+    $('mzFeed').innerHTML = items.map(u=>{
+      const d = new Date(u.created_at).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'});
+      return '<div class="mz-update">'
+        + (isAdmin ? '<button class="mz-linkish mz-del" data-id="'+u.id+'">Delete</button>' : '')
+        + '<div class="meta"><span class="mz-cat'+catClass(u.category)+'">'+(u.category||'Update')+'</span>'
+        + (u.scheme ? '<span class="scheme-tag">'+u.scheme+'</span>' : '')
+        + '<span class="when">'+d+'</span></div><h3></h3><p></p>'
+        + (u.link ? '<a href="'+encodeURI(u.link)+'" target="_blank" rel="noopener">Read more →</a>' : '')
+        + '</div>';
+    }).join('');
+    document.querySelectorAll('#mzFeed .mz-update').forEach((el,i)=>{
+      el.querySelector('h3').textContent = items[i].title || '';
+      el.querySelector('p').textContent = items[i].body || '';
+    });
+    if (isAdmin) document.querySelectorAll('.mz-del').forEach(b=>b.addEventListener('click', async ()=>{
+      if (!confirm('Delete this update?')) return;
+      await db.from('updates').delete().eq('id', b.dataset.id);
+      loadFeed();
+    }));
+  }
+  async function loadFeed(){
+    const { data } = await db.from('updates').select('*').order('created_at',{ascending:false});
+    all = data || []; renderFilters(); renderFeed();
+  }
+  function enter(session){
+    const email = (session.user.email||'').toLowerCase();
+    isAdmin = email === ADMIN_EMAIL;
+    $('mzGreeting').textContent = isAdmin ? 'Welcome back, Ruan — your clients see everything below.' : 'Welcome! Here are your latest updates.';
+    $('mzComposer').style.display = isAdmin ? '' : 'none';
+    setView(true); loadFeed();
+  }
+
+  $('mzLoginBtn').addEventListener('click', async ()=>{
+    $('mzLoginErr').classList.remove('show'); $('mzLoginOk').classList.remove('show');
+    const { data, error } = await db.auth.signInWithPassword({ email: $('mzEmail').value.trim(), password: $('mzPassword').value });
+    if (error){ $('mzLoginErr').textContent = 'Sign-in failed: ' + error.message; $('mzLoginErr').classList.add('show'); return; }
+    enter(data.session);
+  });
+  $('mzPassword').addEventListener('keydown', e=>{ if(e.key==='Enter') $('mzLoginBtn').click(); });
+  $('mzForgotBtn').addEventListener('click', async ()=>{
+    const email = $('mzEmail').value.trim();
+    if (!email){ $('mzLoginErr').textContent = 'Type your email above first, then click "Forgot password".'; $('mzLoginErr').classList.add('show'); return; }
+    const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname.replace('index.html','') + 'portal.html' });
+    if (error){ $('mzLoginErr').textContent = error.message; $('mzLoginErr').classList.add('show'); return; }
+    $('mzLoginOk').textContent = 'Password reset email sent — check your inbox.'; $('mzLoginOk').classList.add('show');
+  });
+  $('mzLogoutBtn').addEventListener('click', async ()=>{ await db.auth.signOut(); setView(false); });
+  $('mzPostBtn').addEventListener('click', async ()=>{
+    $('mzPostErr').classList.remove('show'); $('mzPostOk').classList.remove('show');
+    const title = $('mzTitle').value.trim();
+    if (!title){ $('mzPostErr').textContent='Give the update a title.'; $('mzPostErr').classList.add('show'); return; }
+    const { error } = await db.from('updates').insert({ title, category: $('mzCat').value, scheme: $('mzScheme').value.trim()||null, body: $('mzBody').value.trim()||null, link: $('mzLink').value.trim()||null });
+    if (error){ $('mzPostErr').textContent = error.message; $('mzPostErr').classList.add('show'); return; }
+    $('mzTitle').value=$('mzScheme').value=$('mzBody').value=$('mzLink').value='';
+    $('mzPostOk').textContent='Published! Your clients can see it now.'; $('mzPostOk').classList.add('show');
+    loadFeed();
+  });
+
+  (async function(){
+    const { data } = await db.auth.getSession();
+    if (data.session) enter(data.session); else setView(false);
+  })();
+})();
 </script>
 
 </body>

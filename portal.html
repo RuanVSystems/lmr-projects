@@ -262,8 +262,7 @@
     if (pw.length < 8){ $('resetErr').textContent = 'Password must be at least 8 characters.'; $('resetErr').classList.add('show'); return; }
     const { error } = await db.auth.updateUser({ password: pw });
     if (error){ $('resetErr').textContent = error.message; $('resetErr').classList.add('show'); return; }
-    const { data: s } = await db.auth.getSession();
-    if (s.session) enterFeed(s.session); else show('loginView');
+    location.replace('index.html#members');
   });
 
   $('logoutBtn').addEventListener('click', async ()=>{ await db.auth.signOut(); show('loginView'); });
@@ -272,8 +271,7 @@
 
   (async function init(){
     if (location.hash.includes('type=invite') || location.hash.includes('type=recovery')){ show('resetView'); return; }
-    const { data } = await db.auth.getSession();
-    if (data.session) enterFeed(data.session); else show('loginView');
+    location.replace('index.html#members');
   })();
 </script>
 </body>
