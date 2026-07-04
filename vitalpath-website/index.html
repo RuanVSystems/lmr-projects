@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VitalPath — Ruan Venter | Independent Medical Aid Advisor</title>
+<meta name="description" content="Independent medical aid advice for South African families. Plan brochures, quotes, gap cover and claims support across Discovery, Momentum, Bonitas, Medihelp, Bestmed and KeyHealth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1A22;
+    --mint:#4ADEC4;
+    --mint-strong:#2EC4A6;
+    --text:#EAF2F0;
+    --text-muted:rgba(234,242,240,0.65);
+    --glass:rgba(255,255,255,0.06);
+    --glass-border:rgba(255,255,255,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+  /* ---- Animated mesh gradient background ---- */
+  .blobs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;will-change:transform}
+  .blob1{width:900px;height:900px;left:-200px;top:-100px;background:radial-gradient(circle at center,rgba(74,222,196,0.45) 0%,transparent 70%);filter:blur(80px);animation:drift1 35s ease-in-out alternate infinite}
+  .blob2{width:1000px;height:1000px;left:45%;top:-150px;background:radial-gradient(circle,rgba(96,165,250,0.35) 0%,transparent 70%);filter:blur(90px);animation:drift2 50s ease-in-out alternate infinite}
+  .blob3{width:850px;height:850px;left:-100px;top:55%;background:radial-gradient(circle,rgba(168,132,247,0.30) 0%,transparent 70%);filter:blur(85px);animation:drift3 45s ease-in-out alternate infinite}
+  .blob4{width:700px;height:700px;left:60%;top:65%;background:radial-gradient(circle,rgba(251,191,36,0.22) 0%,transparent 70%);filter:blur(70px);animation:drift4 40s ease-in-out alternate infinite}
+  @keyframes drift1{to{transform:translate(350px,250px) scale(1.15)}}
+  @keyframes drift2{to{transform:translate(-300px,300px) scale(1.1)}}
+  @keyframes drift3{to{transform:translate(400px,80px) scale(1.12)}}
+  @keyframes drift4{to{transform:translate(-320px,-260px) scale(1.08)}}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---- Nav ---- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(14,26,34,0.72);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border-bottom:1px solid var(--glass-border)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1080px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+  .brand-mark{width:42px;height:42px;border-radius:12px;flex:0 0 auto;background:linear-gradient(135deg,var(--mint) 0%,var(--mint-strong) 100%);display:flex;align-items:center;justify-content:center}
+  .brand-mark svg{width:24px;height:24px}
+  .brand-name{font-weight:800;font-size:1.05rem;letter-spacing:-0.01em}
+  .brand-sub{display:block;font-size:0.62rem;font-weight:600;letter-spacing:0.16em;color:var(--mint);text-transform:uppercase}
+  .nav-links{display:flex;gap:22px;align-items:center}
+  .nav-links a{color:var(--text-muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover{color:var(--mint)}
+  .btn{display:inline-block;padding:11px 24px;border-radius:999px;background:linear-gradient(135deg,var(--mint) 0%,var(--mint-strong) 100%);color:#07332A;font-weight:700;font-size:0.9rem;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(74,222,196,0.25);border:none;cursor:pointer;font-family:inherit}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(74,222,196,0.4)}
+  .btn-ghost{background:var(--glass);color:var(--text);border:1px solid var(--glass-border);backdrop-filter:blur(20px);box-shadow:none}
+  .btn-ghost:hover{border-color:var(--mint);box-shadow:none}
+  .btn-sm{padding:8px 16px;font-size:0.8rem}
+  @media(max-width:820px){.nav-links a:not(.btn){display:none}}
+
+  /* ---- Hero ---- */
+  header{padding:88px 0 64px;text-align:center}
+  .eyebrow{font-size:0.75rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--mint);margin-bottom:20px}
+  h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:300;letter-spacing:-0.02em;line-height:1.12;margin-bottom:22px}
+  h1 strong{font-weight:700}
+  .lead{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--text-muted);max-width:620px;margin:0 auto 36px}
+  .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .ticker{margin-top:60px;overflow:hidden;border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);padding:14px 0}
+  .ticker-track{display:flex;gap:48px;white-space:nowrap;animation:ticker 30s linear infinite;width:max-content}
+  .ticker span{font-size:0.85rem;font-weight:600;color:var(--text-muted);letter-spacing:0.06em}
+  .ticker b{color:var(--mint);font-weight:700}
+  @keyframes ticker{to{transform:translateX(-50%)}}
+
+  /* ---- Sections ---- */
+  section{padding:64px 0}
+  h2{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:300;letter-spacing:-0.01em;margin-bottom:12px}
+  h2 strong{font-weight:700}
+  .section-sub{color:var(--text-muted);max-width:600px;margin-bottom:40px}
+  .grid{display:grid;gap:20px}
+  .grid-2{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+  .card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:28px;backdrop-filter:blur(30px) saturate(160%);-webkit-backdrop-filter:blur(30px) saturate(160%);transition:transform .25s,border-color .25s}
+  .card:hover{transform:translateY(-4px);border-color:rgba(74,222,196,0.45)}
+  .card .icon{width:46px;height:46px;border-radius:12px;margin-bottom:18px;background:rgba(74,222,196,0.12);border:1px solid rgba(74,222,196,0.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+  .card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+  .card p{font-size:0.9rem;color:var(--text-muted)}
+
+  /* ---- Brochures ---- */
+  .broch-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+  .broch-tab{padding:10px 22px;border-radius:999px;font-weight:600;font-size:0.9rem;background:var(--glass);border:1px solid var(--glass-border);color:var(--text-muted);cursor:pointer;font-family:inherit;transition:all .2s}
+  .broch-tab.active{background:rgba(74,222,196,0.15);border-color:var(--mint);color:var(--mint)}
+  .broch-card{display:flex;flex-direction:column}
+  .broch-card .links{margin-top:auto;padding-top:16px;display:flex;flex-direction:column;gap:8px}
+  .broch-link{display:flex;align-items:center;gap:8px;font-size:0.86rem;font-weight:600;color:var(--mint);text-decoration:none;padding:9px 14px;border-radius:10px;background:rgba(74,222,196,0.08);border:1px solid rgba(74,222,196,0.25);transition:background .2s}
+  .broch-link:hover{background:rgba(74,222,196,0.18)}
+  .broch-note{margin-top:24px;font-size:0.83rem;color:var(--text-muted);text-align:center}
+
+  /* ---- Quote form ---- */
+  .quote-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:24px;padding:44px 40px;backdrop-filter:blur(30px) saturate(160%)}
+  @media(max-width:560px){.quote-card{padding:28px 20px}}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
+  @media(max-width:680px){.form-grid{grid-template-columns:1fr}}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field.full{grid-column:1/-1}
+  .field label{font-size:0.82rem;font-weight:600;color:var(--text-muted);letter-spacing:0.02em}
+  .field input,.field select,.field textarea{
+    background:rgba(14,26,34,0.6);border:1px solid var(--glass-border);border-radius:12px;
+    padding:13px 16px;color:var(--text);font-family:inherit;font-size:0.95rem;outline:none;transition:border-color .2s;
+    -webkit-appearance:none;appearance:none;
+  }
+  .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234ADEC4' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--mint)}
+  .field textarea{min-height:100px;resize:vertical}
+  .checks{display:flex;flex-wrap:wrap;gap:10px}
+  .checks label{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:rgba(14,26,34,0.6);border:1px solid var(--glass-border);font-size:0.86rem;font-weight:500;color:var(--text);cursor:pointer;transition:all .2s}
+  .checks label:has(input:checked){background:rgba(74,222,196,0.15);border-color:var(--mint);color:var(--mint)}
+  .checks input{accent-color:var(--mint)}
+  .form-footer{grid-column:1/-1;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:6px}
+  .form-privacy{font-size:0.78rem;color:var(--text-muted);max-width:420px}
+  .success-banner{display:none;background:rgba(74,222,196,0.14);border:1px solid var(--mint);border-radius:14px;padding:18px 22px;margin-top:24px;font-weight:600;color:var(--mint)}
+  .success-banner.show{display:block}
+
+  /* ---- News ---- */
+  .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:860px){.news-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.news-grid{grid-template-columns:1fr}}
+  .news-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:22px;backdrop-filter:blur(30px);display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--text);transition:transform .25s,border-color .25s}
+  .news-card:hover{transform:translateY(-4px);border-color:rgba(74,222,196,0.45)}
+  .news-meta{display:flex;gap:10px;align-items:center;font-size:0.74rem;color:var(--mint);font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+  .news-card h3{font-size:0.98rem;font-weight:600;line-height:1.4}
+  .news-card .src{margin-top:auto;font-size:0.78rem;color:var(--text-muted)}
+  .news-status{text-align:center;color:var(--text-muted);font-size:0.9rem;padding:30px 0}
+
+  /* ---- About ---- */
+  .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:44px;align-items:center}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr}}
+  .about-grid p{color:var(--text-muted);margin-bottom:16px}
+  .promise-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:32px;backdrop-filter:blur(30px)}
+  .promise-card blockquote{font-size:1.15rem;font-weight:600;font-style:italic;line-height:1.5;margin-bottom:14px}
+  .promise-card cite{color:var(--mint);font-style:normal;font-size:0.88rem;font-weight:600}
+  .steps{counter-reset:step;margin-top:28px}
+  .step{display:flex;gap:16px;margin-bottom:18px;align-items:flex-start}
+  .step-num{counter-increment:step;flex:0 0 34px;height:34px;border-radius:50%;background:rgba(74,222,196,0.12);border:1px solid rgba(74,222,196,0.35);color:var(--mint);font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center}
+  .step-num::before{content:counter(step)}
+  .step h4{font-size:0.98rem;font-weight:700}
+  .step p{font-size:0.88rem;color:var(--text-muted)}
+
+  /* ---- Portal teaser ---- */
+  .portal-card{background:var(--glass);border:1px dashed rgba(74,222,196,0.4);border-radius:20px;padding:32px;text-align:center;backdrop-filter:blur(30px)}
+  .portal-card h3{font-weight:700;margin-bottom:8px}
+  .portal-card p{color:var(--text-muted);font-size:0.92rem;max-width:520px;margin:0 auto}
+  .portal-badge{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--mint);background:rgba(74,222,196,0.12);border:1px solid rgba(74,222,196,0.3);padding:5px 14px;border-radius:999px;margin-bottom:14px}
+
+  /* ---- Contact / Footer ---- */
+  .contact-rows{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin:26px 0 8px}
+  .contact-item{display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:0.95rem}
+  .contact-item a{color:var(--text);text-decoration:none;font-weight:600}
+  .contact-item a:hover{color:var(--mint)}
+  .contact-item .ci{color:var(--mint);font-size:1.1rem}
+  footer{border-top:1px solid var(--glass-border);background:rgba(255,255,255,0.04);backdrop-filter:blur(40px) saturate(180%);padding:40px 0;text-align:center}
+  footer p{font-size:0.82rem;color:var(--text-muted);margin-bottom:6px}
+  footer .fine{font-size:0.74rem;opacity:0.7}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="blobs" aria-hidden="true">
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div><div class="blob blob4"></div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#07332A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+      </span>
+      <span><span class="brand-name">VitalPath</span><span class="brand-sub">Medical Aid Advisory</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#brochures">Brochures</a>
+      <a href="#services">Services</a>
+      <a href="#news">News</a>
+      <a href="#about">About</a>
+      <a href="#quote" class="btn">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top" class="wrap">
+  <p class="eyebrow">Ruan Venter · Independent Medical Aid Advisor</p>
+  <h1>Navigate medical aid with <strong>clarity and confidence</strong></h1>
+  <p class="lead">Independent advice across South Africa's leading medical schemes — plan comparisons, gap cover, quotations and claims support. My focus is finding the best fit for your needs and budget, not promoting one particular fund.</p>
+  <div class="hero-ctas">
+    <a class="btn" href="#quote">Get a Free Quote</a>
+    <a class="btn btn-ghost" href="#brochures">Browse Plan Brochures</a>
+  </div>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span><b>✓</b> Medical Aid Advisory</span><span><b>✓</b> Gap Cover</span><span><b>✓</b> Claims Assistance</span><span><b>✓</b> Scheme Comparison</span><span><b>✓</b> Discovery · Momentum · Bonitas · Medihelp · Bestmed · KeyHealth</span>
+      <span><b>✓</b> Medical Aid Advisory</span><span><b>✓</b> Gap Cover</span><span><b>✓</b> Claims Assistance</span><span><b>✓</b> Scheme Comparison</span><span><b>✓</b> Discovery · Momentum · Bonitas · Medihelp · Bestmed · KeyHealth</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ BROCHURES ============ -->
+<section class="wrap reveal" id="brochures">
+  <h2>Plan brochures — <strong>download the latest</strong></h2>
+  <p class="section-sub">Official 2026 brochures and plan guides, straight from each scheme. Pull the plan you're on — or the one you're curious about — then ask me to compare.</p>
+
+  <div class="broch-tabs">
+    <button class="broch-tab active" data-tab="medical">Medical Aid Schemes</button>
+    <button class="broch-tab" data-tab="gap">Gap Cover</button>
+  </div>
+
+  <div class="grid grid-3 broch-panel" id="panel-medical">
+    <div class="card broch-card">
+      <h3>Discovery Health</h3>
+      <p>SA's largest open scheme — Executive, Comprehensive, Priority, Saver, Smart, Core and KeyCare series.</p>
+      <div class="links">
+        <a class="broch-link" href="https://www.discovery.co.za/medical-aid/product-benefit-enhancements" target="_blank" rel="noopener">📄 2026 plan guides &amp; benefits</a>
+        <a class="broch-link" href="https://www.discovery.co.za/wcm/discoverycoza/assets/faz/medical-aid/2026/benefit-information/contribution-table.pdf" target="_blank" rel="noopener">📄 2026 contribution table (PDF)</a>
+      </div>
+    </div>
+    <div class="card broch-card">
+      <h3>Momentum Medical Scheme</h3>
+      <p>Flexible options — Ingwe, Evolve, Custom, Incentive, Extender and Summit, with provider choice that sets your premium.</p>
+      <div class="links">
+        <a class="broch-link" href="https://www.momentum.co.za/momentum/personal/medical-aid" target="_blank" rel="noopener">📄 Plans &amp; brochures</a>
+      </div>
+    </div>
+    <div class="card broch-card">
+      <h3>Bonitas</h3>
+      <p>Value-focused options across hospital plans, savings plans and comprehensive cover — BonFit, BonSave, BonComplete and more.</p>
+      <div class="links">
+        <a class="broch-link" href="https://www.bonitas.co.za/2026-launch-highlights/" target="_blank" rel="noopener">📄 2026 plans &amp; highlights</a>
+      </div>
+    </div>
+    <div class="card broch-card">
+      <h3>Medihelp</h3>
+      <p>Over 115 years old with a plan for every life stage — MedVital, MedAdd, MedPrime, MedElite and the Necesse network options.</p>
+      <div class="links">
+        <a class="broch-link" href="brochures/medihelp-plan-comparison-guide-2026.pdf" target="_blank">📄 2026 plan comparison guide (PDF)</a>
+        <a class="broch-link" href="brochures/medihelp-medmove-brochure-2026.pdf" target="_blank">📄 MedMove! student plan brochure (PDF)</a>
+      </div>
+    </div>
+    <div class="card broch-card">
+      <h3>Bestmed</h3>
+      <p>SA's largest self-administered scheme — Beat, Pace and Pulse ranges with strong day-to-day benefits.</p>
+      <div class="links">
+        <a class="broch-link" href="https://www.bestmed.co.za" target="_blank" rel="noopener">📄 Plans &amp; brochures</a>
+      </div>
+    </div>
+    <div class="card broch-card">
+      <h3>KeyHealth</h3>
+      <p>An open scheme since 1968 — Essence, Origin, Equilibrium, Silver, Gold and Platinum options with no co-payments.</p>
+      <div class="links">
+        <a class="broch-link" href="https://www.keyhealthmedical.co.za/documents-forms/" target="_blank" rel="noopener">📄 Option brochures &amp; documents</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-3 broch-panel" id="panel-gap" style="display:none">
+    <div class="card broch-card">
+      <h3>Stratum Benefits</h3>
+      <p>Gap cover from entry-level to elite, covering specialist shortfalls, co-payments and sub-limits.</p>
+      <div class="links">
+        <a class="broch-link" href="https://www.stratumbenefits.co.za/2026_individual_gap-cover-product-range-brochure/" target="_blank" rel="noopener">📄 2026 product range (PDF)</a>
+        <a class="broch-link" href="https://www.stratumbenefits.co.za/gap-cover-downloads/" target="_blank" rel="noopener">📄 All downloads &amp; forms</a>
+      </div>
+    </div>
+    <div class="card broch-card">
+      <h3>Turnberry</h3>
+      <p>Established gap cover provider with options from Launch to Premier — strong oncology and casualty benefits.</p>
+      <div class="links">
+        <a class="broch-link" href="https://turnberry.co.za/wp-content/uploads/2025/09/Turnberry-Brochure-2026.pdf" target="_blank" rel="noopener">📄 2026 product brochure (PDF)</a>
+        <a class="broch-link" href="https://turnberry.co.za/wp-content/uploads/2025/09/Turnberry-2026-Product-Comparison-Table-1.pdf" target="_blank" rel="noopener">📄 2026 comparison table (PDF)</a>
+      </div>
+    </div>
+    <div class="card broch-card">
+      <h3>Sirago</h3>
+      <p>Specialist gap underwriter with Gap Core, Gap Liberal, Ultimate Gap and Exact options.</p>
+      <div class="links">
+        <a class="broch-link" href="https://www.sirago.co.za/downloads/" target="_blank" rel="noopener">📄 Brochures &amp; downloads</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="broch-note">Links open each scheme's official documents in a new tab — always the latest versions, no outdated copies. Not sure which plan fits? <a href="#quote" style="color:var(--mint)">Ask me for a comparison</a>.</p>
+</section>
+
+<!-- ============ CONCERNS ============ -->
+<section class="wrap reveal" id="concerns">
+  <h2>What keeps you <strong>up at night?</strong></h2>
+  <p class="section-sub">Most people come to me with one of these worries. All three are solvable.</p>
+  <div class="grid grid-3">
+    <div class="card"><div class="icon">🛡️</div><h3>Coverage Gaps</h3><p>Worried about shortfalls between what your medical aid pays and what you're billed? Gap cover is designed to close exactly that hole.</p></div>
+    <div class="card"><div class="icon">📈</div><h3>Rising Costs</h3><p>Premiums go up every year and you're not sure you're on the right plan. A proper comparison often finds better value for the same cover.</p></div>
+    <div class="card"><div class="icon">🤝</div><h3>Lack of Support</h3><p>Feeling unsupported navigating claims, benefits and scheme changes? As your registered broker, I handle the admin so you don't have to.</p></div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="wrap reveal" id="services">
+  <h2>How I can <strong>help you</strong></h2>
+  <p class="section-sub">Everything you need to get covered — and stay covered — handled quickly and easily online.</p>
+  <div class="grid grid-4">
+    <div class="card"><div class="icon">🧭</div><h3>Medical Aid Advisory</h3><p>Advice on the right medical aid plan for your specific needs, life stage and budget.</p></div>
+    <div class="card"><div class="icon">🏥</div><h3>Gap Cover</h3><p>Protection against in-hospital shortfalls that your medical aid doesn't pay — at a very competitive premium.</p></div>
+    <div class="card"><div class="icon">📋</div><h3>Quotes &amp; Applications</h3><p>Quotations across multiple schemes, and I handle the application submission on your behalf.</p></div>
+    <div class="card"><div class="icon">💬</div><h3>Claims &amp; Queries</h3><p>Ongoing support with claims, authorisations for planned procedures, and any changes to existing cover.</p></div>
+  </div>
+</section>
+
+<!-- ============ QUOTE FORM ============ -->
+<section class="wrap reveal" id="quote">
+  <div class="quote-card">
+    <h2>Request your <strong>free quote</strong></h2>
+    <p class="section-sub" style="margin-bottom:0">Takes under a minute. I'll personally come back to you with tailored options — no obligation, no pressure.</p>
+
+    <div class="success-banner" id="quoteSuccess">✅ Thank you! Your request has been sent. I'll be in touch personally within one business day.</div>
+
+    <form name="quote-request" method="POST" action="https://formsubmit.co/ruanventer@lmrpro.co.za" class="form-grid">
+      <input type="hidden" name="_subject" value="New quote request — VitalPath website">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none">
+
+      <div class="field"><label for="q-name">Full name *</label><input id="q-name" name="name" type="text" required placeholder="e.g. Jan van der Merwe"></div>
+      <div class="field"><label for="q-email">Email *</label><input id="q-email" name="email" type="email" required placeholder="you@example.com"></div>
+      <div class="field"><label for="q-phone">WhatsApp / phone</label><input id="q-phone" name="phone" type="tel" placeholder="+27 ..."></div>
+      <div class="field"><label for="q-who">Who needs cover? *</label>
+        <select id="q-who" name="who_needs_cover" required>
+          <option value="" disabled selected>Select...</option>
+          <option>Just me</option><option>Me + partner</option><option>Family (with children)</option><option>My parents / other</option>
+        </select>
+      </div>
+      <div class="field"><label for="q-scheme">Current scheme (if any)</label>
+        <select id="q-scheme" name="current_scheme">
+          <option value="" disabled selected>Select...</option>
+          <option>None — first time</option><option>Discovery Health</option><option>Momentum</option><option>Bonitas</option><option>Medihelp</option><option>Bestmed</option><option>KeyHealth</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label for="q-budget">Monthly budget</label>
+        <select id="q-budget" name="monthly_budget">
+          <option value="" disabled selected>Select...</option>
+          <option>Under R2 000</option><option>R2 000 – R4 000</option><option>R4 000 – R7 000</option><option>R7 000 – R12 000</option><option>Over R12 000</option><option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="field full"><label>I'm interested in</label>
+        <div class="checks">
+          <label><input type="checkbox" name="interest" value="Medical aid plan"> Medical aid plan</label>
+          <label><input type="checkbox" name="interest" value="Gap cover"> Gap cover</label>
+          <label><input type="checkbox" name="interest" value="Review my current plan"> Review my current plan</label>
+          <label><input type="checkbox" name="interest" value="Claims help"> Claims help</label>
+        </div>
+      </div>
+      <div class="field full"><label for="q-msg">Anything else I should know?</label><textarea id="q-msg" name="message" placeholder="e.g. chronic medication needs, planned procedures, preferred hospitals..."></textarea></div>
+      <div class="form-footer">
+        <button class="btn" type="submit">Send My Quote Request</button>
+        <p class="form-privacy">Your details are used only to prepare your quote and are never shared. POPIA compliant.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ NEWS ============ -->
+<section class="wrap reveal" id="news">
+  <h2>Medical aid <strong>news &amp; updates</strong></h2>
+  <p class="section-sub">The latest South African medical scheme news — rate changes, benefit updates and industry developments. Refreshed automatically.</p>
+  <div class="news-grid" id="newsGrid"></div>
+  <p class="news-status" id="newsStatus">Loading the latest news…</p>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="wrap reveal" id="about">
+  <h2>About <strong>VitalPath</strong></h2>
+  <div class="about-grid">
+    <div>
+      <p>My name is Ruan Venter and I'm an independent medical aid advisor with the LMR Projects team — an advisory practice built on a foundation of integrity and deep industry knowledge, carrying forward a legacy of making healthcare accessible and understandable for every South African family.</p>
+      <p>Once you're registered as my client, you're never on your own: I and the LMR team support you with advice, administration, claims and authorisations for planned procedures.</p>
+      <div class="steps">
+        <div class="step"><span class="step-num"></span><div><h4>Tell me about your needs</h4><p>A quick chat about your family, health priorities and budget.</p></div></div>
+        <div class="step"><span class="step-num"></span><div><h4>I compare your options</h4><p>Side-by-side quotes across multiple schemes, explained in plain language.</p></div></div>
+        <div class="step"><span class="step-num"></span><div><h4>I handle the paperwork</h4><p>Application submitted on your behalf — quickly and easily online.</p></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="promise-card" style="margin-bottom:20px">
+        <blockquote>"Our promise is simple: we treat your family's health like our own."</blockquote>
+        <cite>— The LMR Projects team</cite>
+      </div>
+      <div class="portal-card">
+        <span class="portal-badge">Coming Soon</span>
+        <h3>Client Portal</h3>
+        <p>Secure login for existing clients — view your plan details, premiums, gap cover and documents online. In development.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="wrap reveal" id="contact" style="padding-top:0">
+  <div class="quote-card" style="text-align:center">
+    <h2>Prefer to <strong>reach out directly?</strong></h2>
+    <div class="contact-rows">
+      <div class="contact-item"><span class="ci">✉️</span><a href="mailto:ruanventer@lmrpro.co.za">ruanventer@lmrpro.co.za</a></div>
+      <div class="contact-item"><span class="ci">📱</span><a href="https://wa.me/27813254764">WhatsApp: +27 81 325 4764</a></div>
+      <div class="contact-item"><span class="ci">📍</span><span>South Africa</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 VitalPath · Ruan Venter, Medical Aid Advisor</p>
+    <p class="fine">Ruan Venter renders financial services under supervision as a representative of LMR Projects cc, an authorised Financial Services Provider — FSP No. 18089.</p>
+    <p class="fine">Council for Medical Schemes Broker Accreditation No. BR54037. Accreditation certificate available on request.</p>
+    <p class="fine">Brochure links open official scheme documents. Plan information is a summary only — always confirm benefits with the scheme.</p>
+  </div>
+</footer>
+
+<script>
+  // ---- Reveal on scroll ----
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target);} });
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  // ---- Brochure tabs ----
+  document.querySelectorAll('.broch-tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.broch-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-medical').style.display = tab.dataset.tab==='medical' ? '' : 'none';
+      document.getElementById('panel-gap').style.display = tab.dataset.tab==='gap' ? '' : 'none';
+    });
+  });
+
+  // ---- Quote form success banner (after Netlify redirect) ----
+  if (new URLSearchParams(location.search).has('submitted')) {
+    document.getElementById('quoteSuccess').classList.add('show');
+    document.querySelector('#quote form').style.display='none';
+    location.hash = '#quote';
+  }
+
+  // ---- Live news feed (Google News RSS via rss2json) ----
+  (async function loadNews(){
+    const grid = document.getElementById('newsGrid');
+    const status = document.getElementById('newsStatus');
+    const feedUrl = 'https://news.google.com/rss/search?q=%22medical%20aid%22%20OR%20%22medical%20scheme%22%20south%20africa&hl=en-ZA&gl=ZA&ceid=ZA:en';
+    try{
+      const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(feedUrl));
+      const data = await res.json();
+      if(data.status!=='ok' || !data.items || !data.items.length) throw new Error('no items');
+      status.style.display='none';
+      data.items.slice(0,6).forEach(item=>{
+        const d = new Date(item.pubDate);
+        const dateStr = d.toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'});
+        // Google News titles look like "Headline - Source"
+        const parts = item.title.split(' - ');
+        const source = parts.length>1 ? parts.pop() : 'News';
+        const headline = parts.join(' - ');
+        const a = document.createElement('a');
+        a.className='news-card'; a.href=item.link; a.target='_blank'; a.rel='noopener';
+        a.innerHTML = '<div class="news-meta"><span>'+dateStr+'</span></div><h3></h3><span class="src"></span>';
+        a.querySelector('h3').textContent = headline;
+        a.querySelector('.src').textContent = source;
+        grid.appendChild(a);
+      });
+    }catch(e){
+      status.innerHTML = 'Live news is temporarily unavailable. In the meantime, <a href="https://www.medicalbrief.co.za" target="_blank" rel="noopener" style="color:var(--mint)">Medical Brief</a> and the <a href="https://www.medicalschemes.co.za" target="_blank" rel="noopener" style="color:var(--mint)">Council for Medical Schemes</a> carry the latest industry updates.';
+    }
+  })();
+</script>
+
+</body>
+</html>
